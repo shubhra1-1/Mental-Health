@@ -1,0 +1,130 @@
+
+
+/******************************************************************************
+
+
+public class Main
+{
+	public static void main(String[] args) {
+		int array[] = {3,8,2,98,1,9,78};
+		
+		for(int i =0;i<=array.length-2;i++){
+		    int min= i;
+		for(int j = i+1 ; j <= array.length-1; j++){
+		    if(array[min] > array[j]){
+		        min=j;
+		    }
+		}
+		
+		int temp = array[i];
+		array[i]= array[min];
+		array[min]= temp;
+	    }
+	    
+	  System.out.println("sorted array ");
+	  for(int num:array){
+	      System.out.print(num + " ");
+	  }
+	}
+}
+//////////////////////////
+
+//////////////////////////////////////////////////////
+class Solution {
+    // Function to sort an array using quick sort algorithm.
+    static void quickSort(int arr[], int low, int high) {
+        // code here
+        if(low>=high) return;
+        int leftPointer=partition(arr,low,high);
+        quickSort(arr,low,leftPointer-1);
+        quickSort(arr,leftPointer+1,high);
+        
+    }
+
+    static int partition(int arr[], int low, int high) {
+        // your code here
+        int pivot = arr[high];
+        int leftPointer = low;
+        int rightPointer = high;
+        
+        
+        
+        while(leftPointer< rightPointer){
+            while(arr[leftPointer]<=pivot && leftPointer< rightPointer ){
+                leftPointer++;
+            }
+            
+            while(arr[rightPointer]>=pivot && leftPointer< rightPointer ){
+                rightPointer--;
+            }
+            // Swap elements at leftPointer and rightPointer
+            if (leftPointer < rightPointer) {
+                int temp = arr[leftPointer];
+                arr[leftPointer] = arr[rightPointer];
+                arr[rightPointer] = temp;
+            
+            }
+        }
+        //swap again for pivot 
+        int temp = arr[leftPointer];
+        arr[leftPointer]=arr[high];
+        arr[high]=temp;
+    
+    return leftPointer;
+    }
+}
+=======================================================
+public class Main
+{
+    
+    public static void divide(int arr[], int start, int end){
+        if(start>=end) return;
+        int mid = (start+end)/2;
+        divide(arr, start, mid);
+        divide(arr,mid+1,end);
+        conquer(arr,start,end,mid);
+        
+    }
+    
+    public static void conquer(int arr[],int start, int end,int mid ){
+        int merge[]= new int[end-start+1];
+        int index1= start;
+        int index2= mid+1;
+        int newIndex=0;
+        
+        while(index1<=mid && index2<=end){
+            if(arr[index1]<=arr[index2]){
+                merge[newIndex]=arr[index1];
+                newIndex++;
+                index1++;
+            }
+            else {
+                merge[newIndex]=arr[index2];
+                newIndex++;
+                index2++;
+            }
+        }
+        //copy back to new array
+        while(index1<=mid){
+            merge[newIndex++]=arr[index1++];
+        }
+        
+        while(index2<=end){
+            merge[newIndex++]=arr[index2++];
+        }
+        
+        for(int i =0,j=start ;i<merge.length;i++,j++){
+            
+            arr[j]=merge[i];
+        }
+        
+    }
+	public static void main(String[] args) {
+		int arr[]={2,3,6,8,4,9};
+		divide(arr,0,arr.length-1);
+		for(int i =0;i<arr.length;i++){
+		    System.out.print(arr[i]);
+		}
+		
+	}
+}

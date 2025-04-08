@@ -1,12 +1,13 @@
+import joblib
 import pandas as pd
-# import matplotlib.pyplot as plt
-# import seaborn as sns
-from sklearn.model_selection import train_test_split, GridSearchCV
+from matplotlib import pyplot as plt
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
-# from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, classification_report, roc_auc_score
+from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.neural_network import MLPClassifier
+import seaborn as sns
+
 
 # Load dataset
 df = pd.read_csv('cleaned_data.csv')
@@ -65,3 +66,35 @@ nn_preds = nn.predict(X_test)
 # Evaluate
 print("Neural Network Performance:")
 print(classification_report(y_test, nn_preds))
+
+# Confusion matrix for Random Forest
+cm_rf = confusion_matrix(y_test, rf_preds)
+sns.heatmap(cm_rf, annot=True, fmt='d', cmap='Blues')
+plt.title('Confusion Matrix: Random Forest')
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
+plt.show()
+
+# Feature importance for Random Forest
+feature_importance = rf.feature_importances_
+plt.barh(df.drop(target, axis=1).columns, feature_importance)
+plt.title('Feature Importance: Random Forest')
+plt.xlabel('Importance')
+plt.ylabel('Feature')
+plt.show()
+
+# Confusion matrix for Neural Network
+cm_nn = confusion_matrix(y_test, nn_preds)
+sns.heatmap(cm_nn, annot=True, fmt='d', cmap='Oranges')
+plt.title('Confusion Matrix: Neural Network')
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
+plt.show()
+
+# Save trained Random Forest model
+joblib.dump(rf, 'random_forest_model.pkl')
+
+# Save the fitted scaler (fit on all 5 features)
+joblib.dump(scaler, 'scaler.pkl')
+
+print("✅ Model and scaler saved successfully!")
