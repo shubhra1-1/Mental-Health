@@ -1,0 +1,28 @@
+# Data manipulation
+pandas
+numpy
+
+# Visualization
+matplotlib
+seaborn
+
+# Machine Learning
+scikit-learn
+joblib
+
+# Web Frameworks
+flask
+streamlit
+requests
+
+# LangChain + Ollama for Chatbot
+langchain
+langchain-core
+langchain-community
+langchain-ollama
+ollama
+
+# Optional Enhancements
+nltk
+tqdm
+gunicorn
